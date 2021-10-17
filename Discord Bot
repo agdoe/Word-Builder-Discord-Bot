@@ -1,0 +1,50 @@
+import discord
+import random
+
+
+TOKEN = 'ODkwNjk4MjgzNTk1NDk3NDcy.YUzlaw.KdOVL7bMVwcguOMmmNiqAxl6kN0'
+
+
+client = discord.Client()
+
+prefix = ['kun', 'un', 'shee', 'oi', 'zoo', 'lay', 'nor', 'go', 'koi', 'yu', 'baz', 'tor', 'poo', 'gra', 'koo', 'to', 'yo', 'lo', 'qa', 'xa', 'vi', 'su', 'ru', "vu'"]
+
+
+midfix = ['shee', 'mun', 'pol', 'shaka', 'kakan', 'shasta', 'huf', 'shissi', 'miko', 'maka', 'zuki', 'loko', 'er', 'nu', 'do', 'qe', 'mo', 'un', 'it', 'go', "'"]
+
+endfix = ['munga', 'moto', 'saka', 'mo', 'lo', 'po', 'fari', 'zi', 'shi', 'keesta', 'noga', 'rou', 'asa', 'taz', 'ano', 'no', 'yo', 'la', 'fa', 'ra', 'do', 'boo', "'"]
+
+
+
+@client.event
+async def on_ready():
+    print('We have logged in as {0.user}'.format(client))
+
+
+@client.event
+async def on_message(message):
+    username = str(message.author).split('#')[0]
+    user_message = str(message.content)
+    channel = str(message.channel.name)
+    print(f'{username}: {user_message} ({channel})')
+
+    if message.author == client.user:
+        return
+
+    if message.channel.name == 'word-builder':
+        if user_message.lower() == 'hello':
+            await message.channel.send(f'Hello {username}!')
+            return
+        elif user_message.lower() == 'bye':
+            await message.channel.send(f'See you later {username}!')
+            return
+        elif user_message.lower() == '!random':
+            response = f'This is your random number: {random.randrange(1000000)}'
+            await message.channel.send(response)
+            return
+    if message.channel.name == 'word-builder':
+        if user_message.lower() == '!build':
+            await message.channel.send(random.choice(prefix) + random.choice(midfix) + random.choice(endfix)) + @message.author
+            return
+
+client.run(TOKEN)
